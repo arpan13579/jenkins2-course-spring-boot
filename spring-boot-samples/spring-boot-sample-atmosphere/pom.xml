@@ -4,8 +4,8 @@
 	<parent>
 		<!-- Your own application should inherit from spring-boot-starter-parent -->
 		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-samples</artifactId>
-		<version>1.4.0.BUILD-SNAPSHOT</version>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.0.RELEASE</version>
 	</parent>
 	<artifactId>spring-boot-sample-atmosphere</artifactId>
 	<name>Spring Boot Atmosphere Sample</name>
@@ -43,38 +43,31 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<scope>test</scope>
-		</dependency>
+                <dependency>
+                    <groupId>org.apache.maven.surefire</groupId>
+                    <artifactId>surefire-testng</artifactId>
+                    <version>2.18.1</version>
+                </dependency>		
 	</dependencies>
 	<build>
-		<plugins>
+		    <plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>2.21.0</version>
+			    <configuration>
+				<testFailureIgnore>true</testFailureIgnore>
+				<skip>false</skip>
+				<reuseForks>false</reuseForks>
+				<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+				<argLine>-Dfile.encoding=UTF-8</argLine>
+				<useSystemClassLoader>false</useSystemClassLoader>
+				<includes>
+				    <!--Test* classes for the app testing -->
+				    <include>**/directory/Test*.java</include>
+				</includes>
+			    </configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.7.201606060606</version>
-				<executions>
-					<execution>
-						<id>default-prepare-agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>default-report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+		    </plugins>
 	</build>
 </project>
